@@ -10,7 +10,7 @@ jobs:
       - run: 
          command:  | 
             echo This step runs in the openjdk container
-      - run: sleep 5 && nc -v localhost 80
+      - run: sleep 5 && nc -v localhost 81
 
 workflows:
   run-executors:
