@@ -11,9 +11,21 @@ jobs:
          command:  | 
             echo This step runs in the openjdk container
       - run: sleep 5 && nc -v localhost 80
+  
+  linux-vm-test:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run:
+          command:  | 
+             mkdir test-dir
+             ls -la
+             cat /etc/os-release
 
 workflows:
   run-executors:
     jobs: 
-      - docker-test
+      #- docker-test
+      - linux-vm-test
   
