@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  win: circleci/windows@2.2.0
+
 jobs:
   docker-test:
     docker:
@@ -7,25 +10,29 @@ jobs:
       - image: httpd
     steps:
       - checkout
-      - run: 
-         command:  | 
+      - run:
+          command: |
             echo This step runs in the openjdk container
       - run: sleep 5 && nc -v localhost 80
-  
   linux-vm-test:
     machine:
       image: ubuntu-2004:202010-01
     steps:
       - checkout
       - run:
-          command:  | 
-             mkdir test-dir
-             ls -la
-             cat /etc/os-release
+          command: |
+            mkdir test-dir
+            ls -la
+            cat /etc/os-release
+  windows-vm-test:
+    executor: win/default
+    steps:
+      - checkout
+      - run: write-Host 'Hello CCI World!'
 
 workflows:
   run-executors:
-    jobs: 
-      #- docker-test
+    jobs:
+      - docker-test
       - linux-vm-test
-  
+      - windows-vm-test
